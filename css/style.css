@@ -1,28 +1,44 @@
 .img-card-fit {
-    object-fit: cover;
-    width: 100%;
-    height: auto;
+	object-fit: cover;
+	width: 100%;
+	height: auto;
 }
 
 .img-cont {
-    height: 200px;
-    overflow: hidden;
-    background-color: beige;
+	height: 200px;
+	overflow: hidden;
+	background-color: beige;
 }
 
-.card-content{
-    height: 150px;
-    overflow: auto;
+.card-content {
+	height: 150px;
+	overflow: auto;
 }
 
 main {
-    min-height: calc(100vh - 100px);
-  }
-
-.checked{
-    color: orange;
+	min-height: calc(100vh - 100px);
 }
 
-.offcanvas-top{
-    height: fit-content;
+.checked {
+	color: orange;
+}
+
+.offcanvas-top {
+	height: fit-content;
+}
+/** ====== Lista de Peliculas ====== **/
+
+.list-item {
+	background-color: rgb(44, 44, 48);
+	color: rgb(231, 231, 231);
+	list-style: none;
+	padding: 20px;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.list-item p {
+	color: rgb(114, 114, 114);
 }
