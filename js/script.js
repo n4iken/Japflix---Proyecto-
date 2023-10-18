@@ -8,21 +8,6 @@ const lista = document.querySelector('#lista'),
 
 //* ====== Eventos ====== *//
 
-// => Funciones Auxiliares
-
-const incluyePelicula = function (elemento, valor, generos) {
-	if (
-		elemento.title.toLowerCase().includes(valor) ||
-		elemento.tagline.toLowerCase().includes(valor) ||
-		elemento.overview.toLowerCase().includes(valor) ||
-		generos.toLowerCase().includes(valor)
-	) {
-		return true;
-	} else {
-		return false;
-	}
-};
-
 document.addEventListener('DOMContentLoaded', () => {
 	let dataArr = new Array();
 	fetch(URL)
@@ -47,21 +32,22 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 		});
 	btn.addEventListener('click', () => {
+		console.log(dataArr[0].title);
 		const valueInputBuscar = inputBuscar.value.toLowerCase();
-
-		dataArr.forEach((element) => {
-			let generos = '';
-			for (let elemento of element.genres) {
-				generos += elemento.name + ' ';
-			}
-			if (incluyePelicula(element, valueInputBuscar, generos)) {
+		dataArr.forEach((pelicula) => {
+			if (
+				pelicula.title.toLowerCase().includes(valueInputBuscar) ||
+				pelicula.tagline.toLowerCase().includes(valueInputBuscar) ||
+				pelicula.overview.toLowerCase().includes(valueInputBuscar) ||
+				pelicula.genres.some((genero) => genero.name.toLowerCase().includes(valueInputBuscar))
+			) {
 				document
 					.getElementsByClassName('list-item')
-					[dataArr.indexOf(element)].removeAttribute('hidden');
+					[dataArr.indexOf(pelicula)].removeAttribute('hidden');
 			} else {
 				document
 					.getElementsByClassName('list-item')
-					[dataArr.indexOf(element)].setAttribute('hidden', true);
+					[dataArr.indexOf(pelicula)].setAttribute('hidden', true);
 			}
 		});
 	});
