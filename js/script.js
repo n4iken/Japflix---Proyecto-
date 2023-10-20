@@ -4,51 +4,68 @@ const URL = 'https://japceibal.github.io/japflix_api/movies-data.json';
 
 const lista = document.querySelector('#lista'),
 	inputBuscar = document.querySelector('#inputBuscar'),
-	btn = document.querySelector('#btnBuscar');
+	btn = document.querySelector('#btnBuscar'),
+	listItem = document.getElementsByClassName('list-item');
 
 //* ====== Eventos ====== *//
 
 document.addEventListener('DOMContentLoaded', () => {
-	let dataArr = new Array();
+	let peliculasArr = new Array();
 	fetch(URL)
 		.then((response) => response.json())
 		.then((data) => {
-			data.forEach((element) => {
+			data.forEach((pelicula) => {
 				const li = document.createElement('li');
 				li.setAttribute('hidden', true);
+				li.setAttribute('data-bs-toggle', 'offcanvas');
+				li.setAttribute('data-bs-target', '#offcanvasTop');
+				li.setAttribute('aria-controls', 'offcanvasTop');
+
 				li.classList.add('list-item');
 				li.innerHTML = `
         <div class='data-content'>
-          <h3>${element.title}</h3> 
-          <p>${element.tagline}</p>
+          <h3>${pelicula.title}</h3> 
+          <p>${pelicula.tagline}</p>
         </div>
         <div class='star-content'>
-          <span>${element.vote_average}</span>
+					<span class="fa fa-star"></span>
+					<span class="fa fa-star"></span>
+					<span class="fa fa-star"></span>
+					<span class="fa fa-star"></span>
+					<span class="fa fa-star"></span>
         </div>`;
 
 				lista.appendChild(li);
 
-				dataArr.push(element);
+				const stars = li.querySelectorAll('.fa-star');
+				for (let i = 0; i < (pelicula.vote_average - 1) / 2; i++) {
+					stars[i].classList.add('checked');
+				}
+				peliculasArr.push(pelicula);
 			});
 		});
-	btn.addEventListener('click', () => {
-		console.log(dataArr[0].title);
+
+	const buscarBtnFunc = () => {
 		const valueInputBuscar = inputBuscar.value.toLowerCase();
-		dataArr.forEach((pelicula) => {
+		peliculasArr.forEach((pelicula) => {
 			if (
 				pelicula.title.toLowerCase().includes(valueInputBuscar) ||
 				pelicula.tagline.toLowerCase().includes(valueInputBuscar) ||
 				pelicula.overview.toLowerCase().includes(valueInputBuscar) ||
 				pelicula.genres.some((genero) => genero.name.toLowerCase().includes(valueInputBuscar))
 			) {
-				document
-					.getElementsByClassName('list-item')
-					[dataArr.indexOf(pelicula)].removeAttribute('hidden');
+				listItem[peliculasArr.indexOf(pelicula)].removeAttribute('hidden');
 			} else {
-				document
-					.getElementsByClassName('list-item')
-					[dataArr.indexOf(pelicula)].setAttribute('hidden', true);
+				listItem[peliculasArr.indexOf(pelicula)].setAttribute('hidden', true);
 			}
 		});
+	};
+
+	btn.addEventListener('click', buscarBtnFunc);
+
+	window.addEventListener('keydown', (e) => {
+		if (e.keyCode === 13) {
+			buscarBtnFunc();
+		}
 	});
 });

@@ -33,12 +33,29 @@ main {
 	color: rgb(231, 231, 231);
 	list-style: none;
 	padding: 20px;
-
+	margin-top: 15px;
+	cursor: pointer;
+	border-radius: 10px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+
+	@media (width <= 1048px) {
+		flex-direction: column;
+		align-items: start;
+	}
 }
 
 .list-item p {
 	color: rgb(114, 114, 114);
+}
+
+/* STARS */
+
+.checked {
+	color: rgb(255, 183, 48);
+}
+
+.list-group {
+	display: flex;
 }
